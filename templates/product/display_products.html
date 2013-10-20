@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for sg in sunglass_objects %}
+<p>{{sg}}</p>
+{% endfor %}
+
+{% for eg in eyeglasses %}
+<p>{{eg}}</p>
+{% endfor %}
+
+{% endblock %}
