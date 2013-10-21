@@ -1,12 +1,29 @@
 {% extends 'base.html' %}
+{% load custom_template_filters %}
+
 {% block content %}
 
 {% for sg in sunglass_objects %}
-<p>{{sg}}</p>
+<p>{{sg}} <a href="{% url 'add-to-cart' sg|app_label sg|class_name  sg.pk %}" >Buy</a></p> 
+<!-- <button type="button" onclick="cart_toggle()">Buy</button> --> 
 {% endfor %}
 
 {% for eg in eyeglasses %}
-<p>{{eg}}</p>
+<p>{{eg}} <a href="{% url 'add-to-cart' eg|app_label eg|class_name  eg.pk %}" >Buy</a> </p>  
+<!-- <button type="button" data-toggle="modal" data-target="#myModal">Buy</button> -->
 {% endfor %}
+
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript">
+function cart_toggle(app_label){
+    alert(app_label)
+    $('#myModal').modal({
+        show:true
+    })
+}
+</script>
 
 {% endblock %}
