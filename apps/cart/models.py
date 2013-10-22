@@ -17,7 +17,7 @@ class CartItem(Base):
     unit_price = models.FloatField(default=0.0, blank=True)
     
     def __str__(self):
-        return self.content_object
+        return self.content_object.title
 
 
 class Cart(Base):

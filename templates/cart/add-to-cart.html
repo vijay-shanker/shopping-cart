@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for cart_item in cart.cartitems.all %}
+<p>{{cart_item}}</p>
+{% endfor %}
+
+{% endblock %}
