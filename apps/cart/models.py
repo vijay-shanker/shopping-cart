@@ -22,8 +22,8 @@ class CartItem(Base):
 
 class Cart(Base):
     cart_id = models.CharField(max_length=50, null=False)
-    customer = models.ForeignKey(User,null=True,blank=True)
-    customer_ip = models.IPAddressField(null=True, blank=True) 
+    customer = models.ForeignKey(User,null=True,blank=True, default=None)
+    customer_ip = models.IPAddressField(null=True, blank=True, default='127.0.0.1') 
     cartitems = models.ManyToManyField(CartItem,null=True,blank=True)
     num_cartitem = models.IntegerField(default=0)
     subtotal = models.FloatField(null=True,blank=True, default=0)

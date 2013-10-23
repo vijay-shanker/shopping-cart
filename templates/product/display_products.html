@@ -4,13 +4,12 @@
 {% block content %}
 
 {% for sg in sunglass_objects %}
-<p>{{sg}} <a href="{% url 'add-to-cart' sg|app_label sg|class_name  sg.pk %}" >Buy</a></p> 
-<!-- <button type="button" onclick="cart_toggle()">Buy</button> --> 
+<p>{{sg}} <a href="{% url 'add-to-cart' sg|app_label sg|class_name  sg.pk %}" >Buy</a> 
+</p> 
 {% endfor %}
 
 {% for eg in eyeglasses %}
-<p>{{eg}} <a href="{% url 'add-to-cart' eg|app_label eg|class_name  eg.pk %}" >Buy</a> </p>  
-<!-- <button type="button" data-toggle="modal" data-target="#myModal">Buy</button> -->
+<p>{{eg}}<a href="{% url 'add-to-cart' eg|app_label eg|class_name  eg.pk %}" >Buy</a> </p>  
 {% endfor %}
 
 {% endblock %}
@@ -18,12 +17,12 @@
 {% block javascript %}
 
 <script type="text/javascript">
-function cart_toggle(app_label){
-    alert(app_label)
-    $('#myModal').modal({
-        show:true
-    })
-}
+// function cart_toggle(app_label){
+//     alert(app_label)
+//     $('#myModal').modal({
+//         show:true
+//     })
+// }
 </script>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 import uuid
 from apps.cart.models import Cart
-CART_ID = 'CART-ID'
+CART_ID = 'CART_ID'
 
 class Cart(object):
     def __init__(self,request):

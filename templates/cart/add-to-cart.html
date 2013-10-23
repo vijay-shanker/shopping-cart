@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{{request.session.CART_ID}}
 {% for cart_item in cart.cartitems.all %}
 <p>{{cart_item}}</p>
+<form method="POST" action="">{% csrf_token %}
+    {{form.as_p}}
+    <input type="hidden" name="cartitem" value="{{cart_item.pk}}" />
+    <input type="hidden" name="cart" value="{{cart.pk}}" />
+    <input type="submit" value="remove">
+</form>
 {% endfor %}
 
 {% endblock %}
