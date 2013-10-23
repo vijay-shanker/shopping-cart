@@ -4,15 +4,15 @@ from django.views.generic import DetailView, TemplateView
 from django.contrib.contenttypes.models import ContentType
 from apps.cart.models import Cart, CartItem
 from django.views.generic.edit import FormMixin
-from django.views.generic.edit import ProcessFormView
+from django.views.generic.base import View
 from django import forms
 
 class RemoveFromCartForm(forms.Form):
-    pass
+    cartitem = forms.HiddenInput()
+    cart = forms.HiddenInput()
 
 
-class AddToCart(DetailView,ProcessFormView ):
-    form_class = RemoveFromCartForm
+class AddToCart(DetailView):
     model = Cart 
     context_object_name = 'cart'
     template_name = 'cart/add-to-cart.html'
@@ -36,8 +36,11 @@ class AddToCart(DetailView,ProcessFormView ):
             request.session['CART_ID'] = cart_id
         return super(AddToCart, self).dispatch(request,*args,**kwargs)
 
-    def post(self, request, *args, **kwargs):
-        print 'hereeeeeeeeeeeeeeeeee'
+class RemoveFromCart(View):
+    def post(self,request):
+        print 'hahahaa try'
+
+
 
 
 
