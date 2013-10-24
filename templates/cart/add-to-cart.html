@@ -2,7 +2,7 @@
 
 {% block content %}
 {{request.session.CART_ID}}
-{% for cart_item in cart.cartitems.all %}
+{% for cart_item in cart.cartitem.all %}
 <p>{{cart_item}}</p>
 <form method="POST" action="{% url 'remove-from-cart' %}">{% csrf_token %}
     <input type="hidden" name="cartitem" value="{{cart_item.pk}}" />
