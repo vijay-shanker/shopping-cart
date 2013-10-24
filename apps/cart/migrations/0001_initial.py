@@ -16,49 +16,36 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'cart', ['Base'])
 
-        # Adding model 'CartItem'
-        db.create_table(u'cart_cartitem', (
-            (u'base_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cart.Base'], unique=True, primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('quantity', self.gf('django.db.models.fields.IntegerField')(default=1)),
-            ('unit_price', self.gf('django.db.models.fields.FloatField')(default=0.0, blank=True)),
-        ))
-        db.send_create_signal(u'cart', ['CartItem'])
-
         # Adding model 'Cart'
         db.create_table(u'cart_cart', (
             (u'base_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cart.Base'], unique=True, primary_key=True)),
             ('cart_id', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('customer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('customer_ip', self.gf('django.db.models.fields.IPAddressField')(max_length=15, null=True, blank=True)),
-            ('num_cartitem', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('subtotal', self.gf('django.db.models.fields.FloatField')(default=0, null=True, blank=True)),
+            ('customer', self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['auth.User'], null=True, blank=True)),
+            ('customer_ip', self.gf('django.db.models.fields.IPAddressField')(default='127.0.0.1', max_length=15, null=True, blank=True)),
         ))
         db.send_create_signal(u'cart', ['Cart'])
 
-        # Adding M2M table for field cartitems on 'Cart'
-        m2m_table_name = db.shorten_name(u'cart_cart_cartitems')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('cart', models.ForeignKey(orm[u'cart.cart'], null=False)),
-            ('cartitem', models.ForeignKey(orm[u'cart.cartitem'], null=False))
+        # Adding model 'CartItem'
+        db.create_table(u'cart_cartitem', (
+            (u'base_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cart.Base'], unique=True, primary_key=True)),
+            ('cart', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['cart.Cart'])),
+            ('quantity', self.gf('django.db.models.fields.IntegerField')(default=1)),
+            ('unit_price', self.gf('django.db.models.fields.FloatField')(default=0.0)),
+            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
+            ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
         ))
-        db.create_unique(m2m_table_name, ['cart_id', 'cartitem_id'])
+        db.send_create_signal(u'cart', ['CartItem'])
 
 
     def backwards(self, orm):
         # Deleting model 'Base'
         db.delete_table(u'cart_base')
 
-        # Deleting model 'CartItem'
-        db.delete_table(u'cart_cartitem')
-
         # Deleting model 'Cart'
         db.delete_table(u'cart_cart')
 
-        # Removing M2M table for field cartitems on 'Cart'
-        db.delete_table(db.shorten_name(u'cart_cart_cartitems'))
+        # Deleting model 'CartItem'
+        db.delete_table(u'cart_cartitem')
 
 
     models = {
@@ -101,19 +88,17 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Cart', '_ormbases': [u'cart.Base']},
             u'base_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['cart.Base']", 'unique': 'True', 'primary_key': 'True'}),
             'cart_id': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'cartitems': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['cart.CartItem']", 'null': 'True', 'blank': 'True'}),
-            'customer': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'customer_ip': ('django.db.models.fields.IPAddressField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
-            'num_cartitem': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'subtotal': ('django.db.models.fields.FloatField', [], {'default': '0', 'null': 'True', 'blank': 'True'})
+            'customer': ('django.db.models.fields.related.ForeignKey', [], {'default': 'None', 'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'}),
+            'customer_ip': ('django.db.models.fields.IPAddressField', [], {'default': "'127.0.0.1'", 'max_length': '15', 'null': 'True', 'blank': 'True'})
         },
         u'cart.cartitem': {
             'Meta': {'object_name': 'CartItem', '_ormbases': [u'cart.Base']},
             u'base_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['cart.Base']", 'unique': 'True', 'primary_key': 'True'}),
+            'cart': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['cart.Cart']"}),
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'quantity': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
-            'unit_price': ('django.db.models.fields.FloatField', [], {'default': '0.0', 'blank': 'True'})
+            'unit_price': ('django.db.models.fields.FloatField', [], {'default': '0.0'})
         },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
