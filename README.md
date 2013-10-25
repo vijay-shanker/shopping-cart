@@ -8,7 +8,7 @@ run syncdb or use south to create/modify tables required.
 
 This app assumes your product model has title and price fields.
 
-Usage:
+
 Add to cart:
 You can add "this" link to call AddToCart class for say a product_object instance like this:
 
