@@ -17,6 +17,13 @@ class Cart(Base):
     def __str__(self):
         return self.cart_id
 
+    @property
+    def total_price(self):
+        return reduce(lambda x,y:x+y, CartItem.objects.filter(cart=self).values_list('unit_price', flat=True))
+    
+    @property
+    def total_items(self):
+        return CartItem.objects.filter(cart=self).count()
 
 class CartItem(Base):
     cart = models.ForeignKey(Cart)
@@ -27,7 +34,7 @@ class CartItem(Base):
     content_object = generic.GenericForeignKey('content_type','object_id')
     
     def __str__(self):
-        return 'CartItem in %s'%(self.cart.cart_id)
+        return self.content_object.title
 
     @property
     def cost(self):

@@ -2,9 +2,9 @@
 
 {% block content %}
 <table width="80%">
-    <th>
-        <td width="60%">Item</td><td width="10%">Quantity</td><td width="10%">Unit Price</td><td width="10%">Cost&nbsp;</td><td></td>
-    </th>
+    <tr>
+        <td>Item</td><td>Quantity</td><td>Unit Price</td><td>Cost</td><td>&nbsp;</td>
+    </tr>
 {% for cart_item in cart.cartitem_set.all %}
 <tr>
     <td>{{cart_item}}</td><td>{{cart_item.quantity}}</td><td>{{cart_item.unit_price}}</td><td>{{cart_item.cost}}</td>
@@ -17,6 +17,12 @@
     </td>
 </tr> 
 {% endfor %}
+
+<tr>
+    <td><b>Total Number of items</td><td>{{cart.total_items}}</b></td>
+</tr>
+<tr>
+    <td><b>Total Price</td><td>{{cart.total_price}}</b></td>
 </table>
 {% endblock %}
 

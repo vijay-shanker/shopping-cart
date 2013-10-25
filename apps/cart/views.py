@@ -25,7 +25,9 @@ class AddToCart(DetailView):
         #check if cart exists for current session
         if 'CART_ID' in request.session.keys():
             cart = Cart.objects.get(cart_id=self.request.session._session_key)
-            cart_item, created = CartItem.objects.get_or_create(cart=cart, content_type=content_type, object_id=self.request.GET['obj_id'])
+            cart_item = CartItem.objects.create(cart=cart, content_type=content_type, object_id=self.request.GET['obj_id'])
+            cart_item.unit_price = product.price
+            cart_item.save()
         else:
             cart_id = request.session._session_key
             cart = Cart.objects.create(cart_id=cart_id)
