@@ -1,21 +1,16 @@
 shopping-cart
 =============
-This app at best can give pointers/ideas to start writing your very own shopping cart.
 This app is meant only for example purpose.
 
-After putting cart in your installed apps, and adding this:  url(r'^cart/', include('apps.cart.urls')) in your urls.py,
-run syncdb or use south to create/modify tables required.
+put cart in your installed apps, add this in urls:  url(r'^cart/', include('apps.cart.urls')) in your urls.py,
+run syncdb or use south for schema.
 
 This app assumes your product model has title and price fields.
-
 
 Add to cart:
 You can add "this" link to call AddToCart class for say a product_object instance like this:
 
 <a href="{% url 'add-to-cart' %}?app_label={{product_object|app_label}}&model_name={{product_object|class_name}}&obj_id={{sg.pk}}" >Add to cart</a>   
-
-This link will lead you to a page with product information and calculated number of items and grand total along with
-a link to remove item to cart.
 
 The link to remove item from cart is obtained by rendering a form which then redirects to same page.
 
