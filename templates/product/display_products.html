@@ -4,12 +4,12 @@
 {% block content %}
 
 {% for sg in sunglass_objects %}
-<p>{{sg}} <!-- <a href="% url 'add-to-cart' sg|app_label sg|class_name  sg.pk %" >Buy</a> --> 
+<p>{{sg}} <a href="{% url 'add-to-cart' %}?app_label={{sg|app_label}}&model_name={{sg|class_name}}&obj_id={{sg.pk}}" >Buy</a> 
 </p> 
 {% endfor %}
 
 {% for eg in eyeglasses %}
-<p>{{eg}}<!-- <a href="% url 'add-to-cart' eg|app_label eg|class_name  eg.pk %" >Buy</a> --> </p>  
+<p>{{eg}}<a href="{% url 'add-to-cart' %}?app_label={{eg|app_label}}&model_name={{eg|class_name}}&obj_id={{eg.pk}}" >Buy</a> </p>  
 {% endfor %}
 
 {% endblock %}

@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{request.session.CART_ID}}
-{% for cart_item in cart.cartitem.all %}
-<p>{{cart_item}}</p>
-<!-- <form method="POST" action="{% url 'remove-from-cart' %}">{% csrf_token %}
-    <input type="hidden" name="cartitem" value="{{cart_item.pk}}" />
-    <input type="hidden" name="cart" value="{{cart.pk}}" />
-    <input type="submit" value="remove">
-</form> -->
+<table width="80%">
+    <th>
+        <td width="60%">Item</td><td width="10%">Quantity</td><td width="10%">Unit Price</td><td width="10%">Cost&nbsp;</td><td></td>
+    </th>
+{% for cart_item in cart.cartitem_set.all %}
+<tr>
+    <td>{{cart_item}}</td><td>{{cart_item.quantity}}</td><td>{{cart_item.unit_price}}</td><td>{{cart_item.cost}}</td>
+    <td>
+        <form method="POST" action="{% url 'remove-from-cart' %}">{% csrf_token %}
+            <input type="hidden" name="cartitem" value="{{cart_item.pk}}" />
+            <input type="hidden" name="cart" value="{{cart.pk}}" />
+            <input type="submit" value="remove">
+        </form>
+    </td>
+</tr> 
 {% endfor %}
-
+</table>
 {% endblock %}
+

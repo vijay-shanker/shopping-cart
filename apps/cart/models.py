@@ -27,6 +27,9 @@ class CartItem(Base):
     content_object = generic.GenericForeignKey('content_type','object_id')
     
     def __str__(self):
-        return self.content_object.title
+        return 'CartItem in %s'%(self.cart.cart_id)
 
+    @property
+    def cost(self):
+        return self.quantity * self.unit_price
 
