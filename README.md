@@ -1,7 +1,6 @@
 shopping-cart
 =============
-This app is going to become a full fledged app now.
-See cartridge.. copy liberallyvzxzxv
+Work on it more seriously
 
 
 
