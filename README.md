@@ -1,6 +1,7 @@
 shopping-cart
 =============
-Work on it more seriously dude
+This app is meant only for cool dudes.
+
 
 
 
